@@ -12,20 +12,19 @@ async def animate_spaceship(canvas, start_row, start_column, rocket_symbols):
     max_row, max_column = canvas.getmaxyx()
 
     for frame in cycle(rocket_symbols):
-        rows_direction, columns_direction, _ = read_controls(canvas)
-        row += rows_direction
-        column += columns_direction
-
-        row = max(1, min(row + rows_direction, max_row - frame_rows - 1))
-        column = max(1, min(column + columns_direction, max_column - frame_columns - 1))
-
-        if prev_frame is not None:
-            draw_frame(canvas, prev_row, prev_column, prev_frame, negative=True)
-        draw_frame(canvas, row, column, frame)
-
-        canvas.refresh()
-        prev_frame = frame
-        prev_row, prev_column = row, column
-
         for _ in range(2):
+            rows_direction, columns_direction, _ = read_controls(canvas)
+            row += rows_direction
+            column += columns_direction
+
+            row = max(1, min(row + rows_direction, max_row - frame_rows - 1))
+            column = max(1, min(column + columns_direction, max_column - frame_columns - 1))
+
+            if prev_frame is not None:
+                draw_frame(canvas, prev_row, prev_column, prev_frame, negative=True)
+            draw_frame(canvas, row, column, frame)
+
+            prev_frame = frame
+            prev_row, prev_column = row, column
+
             await asyncio.sleep(0)
