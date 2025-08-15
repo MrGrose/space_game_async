@@ -18,7 +18,7 @@ def main(canvas):
     canvas.addstr(0, 0, f"Height: {height}, Width: {width}")
     canvas.refresh()
     space_stars = random.randint(30, 50)
-    coroutines = [blink(canvas, random.randint(1, height-2), random.randint(1, width-2), random.choice("+*.:")) for _ in range(space_stars)]
+    coroutines = [blink(canvas, random.randint(1, height-2), random.randint(1, width-2), random.choice("+*.:"), random.randint(4, 10)) for _ in range(space_stars)]
 
     rocket_symbols = get_rocket_frame()
     coroutines.append(fire(canvas, height/2, (width/2)+2))
