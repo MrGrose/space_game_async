@@ -16,7 +16,6 @@ def main(canvas):
     canvas.border()
     height, width = canvas.getmaxyx()
     canvas.addstr(0, 0, f"Height: {height}, Width: {width}")
-    canvas.refresh()
     space_stars = random.randint(30, 50)
     coroutines = [blink(canvas, random.randint(1, height-2), random.randint(1, width-2), random.choice("+*.:"), random.randint(4, 10)) for _ in range(space_stars)]
 
@@ -30,6 +29,7 @@ def main(canvas):
                 coroutine.send(None)
             except StopIteration:
                 coroutines.remove(coroutine)
+        canvas.refresh()
         time.sleep(TIC_TIMEOUT)
 
 
