@@ -1,3 +1,4 @@
+import asyncio
 from pathlib import Path
 
 BASE_FOLDER = Path(__file__).parent
@@ -70,3 +71,18 @@ def draw_frame(canvas, start_row, start_column, text, negative=False):
                 continue
             symbol = symbol if not negative else " "
             canvas.addch(row, column, symbol)
+
+
+def get_garbage_frame():
+    frames = []
+    path_file = BASE_FOLDER / "garbage_frame"
+    for garbage in path_file.rglob("trash_*.txt"):
+        with open(garbage, "r") as garbage_file:
+            frames.append(garbage_file.read())
+
+    return frames
+
+
+async def sleep(tics=1):
+    for _ in range(tics):
+        await asyncio.sleep(0)

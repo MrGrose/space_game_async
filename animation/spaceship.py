@@ -1,7 +1,6 @@
-import asyncio
 from itertools import cycle
 
-from utils import draw_frame, get_frame_size, read_controls
+from utils import draw_frame, get_frame_size, read_controls, sleep
 
 
 async def animate_spaceship(canvas, start_row, start_column, rocket_symbols):
@@ -27,4 +26,4 @@ async def animate_spaceship(canvas, start_row, start_column, rocket_symbols):
             prev_frame = frame
             prev_row, prev_column = row, column
 
-            await asyncio.sleep(0)
+            await sleep()
