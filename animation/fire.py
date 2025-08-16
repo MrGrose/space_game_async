@@ -29,4 +29,3 @@ async def fire(canvas, start_row, start_column, rows_speed=-0.3, columns_speed=0
         canvas.addstr(round(row), round(column), " ")
         row += rows_speed
         column += columns_speed
-        column += columns_speed

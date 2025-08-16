@@ -3,7 +3,6 @@ import random
 import time
 
 from animation.blink import blink
-from animation.fire import fire
 from animation.garbage import fill_orbit_with_garbage
 from animation.spaceship import animate_spaceship
 from utils import get_garbage_frame, get_rocket_frame
@@ -25,8 +24,7 @@ def main(canvas):
     garbage_frames = get_garbage_frame()
 
     coroutines.extend([blink(canvas, random.randint(1, height-2), random.randint(1, width-2), random.choice("+*.:"), random.randint(4, 10)) for _ in range(space_stars)])
-    coroutines.append(fire(canvas, height/2, (width/2)+2))
-    coroutines.append(animate_spaceship(canvas, height/2, width/2, rocket_symbols))
+    coroutines.append(animate_spaceship(canvas, height/2, width/2, rocket_symbols, coroutines))
     coroutines.append(fill_orbit_with_garbage(canvas, coroutines, garbage_frames, width))
 
     while coroutines:
