@@ -1,6 +1,4 @@
-import asyncio
-
-from utils import draw_frame
+from utils import draw_frame, sleep
 
 
 class Obstacle:
@@ -13,7 +11,6 @@ class Obstacle:
         self.uid = uid
 
     def get_bounding_box_frame(self):
-        # increment box size to compensate obstacle movement
         rows, columns = self.rows_size + 1, self.columns_size + 1
         return '\n'.join(_get_bounding_box_lines(rows, columns))
 
@@ -25,7 +22,6 @@ class Obstacle:
         return row, column, self.get_bounding_box_frame()
 
     def has_collision(self, obj_corner_row, obj_corner_column, obj_size_rows=1, obj_size_columns=1):
-        '''Determine if collision has occured. Return True or False.'''
         return has_collision(
             (self.row, self.column),
             (self.rows_size, self.columns_size),
@@ -35,7 +31,6 @@ class Obstacle:
 
 
 def _get_bounding_box_lines(rows, columns):
-
     yield ' ' + '-' * columns + ' '
     for _ in range(rows):
         yield '|' + ' ' * columns + '|'
@@ -43,19 +38,13 @@ def _get_bounding_box_lines(rows, columns):
 
 
 async def show_obstacles(canvas, obstacles):
-    """Display bounding boxes of every obstacle in a list"""
-    
     while True:
         boxes = []
-
         for obstacle in obstacles:
             boxes.append(obstacle.dump_bounding_box())
-        
         for row, column, frame in boxes:
             draw_frame(canvas, row, column, frame)
-
-        await asyncio.sleep(0)
-
+        await sleep()
         for row, column, frame in boxes:
             draw_frame(canvas, row, column, frame, negative=True)
 
@@ -68,18 +57,14 @@ def _is_point_inside(corner_row, corner_column, size_rows, size_columns, point_r
 
 
 def has_collision(obstacle_corner, obstacle_size, obj_corner, obj_size=(1, 1)):
-    '''Determine if collision has occured. Return True or False.'''
-
     opposite_obstacle_corner = (
         obstacle_corner[0] + obstacle_size[0] - 1,
         obstacle_corner[1] + obstacle_size[1] - 1,
     )
-
     opposite_obj_corner = (
         obj_corner[0] + obj_size[0] - 1,
         obj_corner[1] + obj_size[1] - 1,
     )
-
     return any([
         _is_point_inside(*obstacle_corner, *obstacle_size, *obj_corner),
         _is_point_inside(*obstacle_corner, *obstacle_size, *opposite_obj_corner),
