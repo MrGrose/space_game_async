@@ -48,7 +48,7 @@ def get_rocket_frame():
     rocket_symbols = []
     path_file = BASE_FOLDER / "rocket_frame"
     for rocket in path_file.rglob("rocket_frame_*.txt"):
-        with open(rocket, "r", encoding="utf-8") as file:
+        with open(rocket, "r") as file:
             rocket_symbols.append(file.read())
 
     return rocket_symbols
