@@ -24,11 +24,11 @@ def main(canvas):
 
     coroutines.extend([blink(canvas, random.randint(1, height-2), random.randint(1, width-2), random.choice("+*.:"), random.randint(4, 10)) for _ in range(space_stars)])
     coroutines.extend(
-        [
+        (
             animate_spaceship(canvas, height/2, width/2, rocket_symbols, coroutines, obstacles, obstacles_in_last_collisions),
             fill_orbit_with_garbage(canvas, coroutines, garbage_frames, width, obstacles, obstacles_in_last_collisions, year),
             update_year_counter(canvas, year)
-        ]
+        )
     )
 
     while coroutines:
