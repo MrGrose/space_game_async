@@ -41,13 +41,15 @@ async def fill_orbit_with_garbage(canvas, coroutines, garbage_frames, max_width,
             for _ in range(0, amount_year):
                 time_stick = random.randint(5, 10)
                 column = random.randint(1, max_width - 2)
+                speed = random.uniform(0.5, 1.5)
                 garbage_frame = random.choice(garbage_frames)
                 coroutines.append(fly_garbage(
                     canvas,
                     column,
                     garbage_frame,
                     obstacles,
-                    obstacles_in_last_collisions
+                    obstacles_in_last_collisions,
+                    speed
                 ))
                 await sleep(time_stick)
         await sleep()
