@@ -46,7 +46,7 @@ def get_frame_size(text):
 
 def get_rocket_frame():
     rocket_symbols = []
-    path_file = BASE_FOLDER / "rocket_frame"
+    path_file = BASE_FOLDER / "rocket"
     for rocket in path_file.rglob("rocket_frame_*.txt"):
         with open(rocket, "r") as file:
             rocket_symbols.append(file.read())
@@ -77,7 +77,7 @@ def draw_frame(canvas, start_row, start_column, text, negative=False):
 
 def get_garbage_frame():
     frames = []
-    path_file = BASE_FOLDER / "garbage_frame"
+    path_file = BASE_FOLDER / "garbage"
     for garbage in path_file.rglob("*.txt"):
         with open(garbage, "r") as garbage_file:
             frames.append(garbage_file.read())
@@ -94,7 +94,7 @@ async def show_gameover(canvas, row, column, frame):
     height, width = canvas.getmaxyx()
     draw_frame(canvas, row, column, frame, negative=True)
 
-    path_file = BASE_FOLDER / "gameover_frame/gameover.txt"
+    path_file = BASE_FOLDER / "gameover/gameover.txt"
     with open(path_file, "r") as file:
         gameover_file = file.read()
 
