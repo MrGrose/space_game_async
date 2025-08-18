@@ -1,7 +1,7 @@
 import asyncio
 from pathlib import Path
 
-from game_scenario import PHRASES
+from scenario.game_scenario import PHRASES
 
 BASE_FOLDER = Path(__file__).parent / "frames"
 
