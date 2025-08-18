@@ -1,6 +1,7 @@
 import curses
 import random
 import time
+from itertools import chain
 
 from animation.blink import blink
 from animation.garbage import fill_orbit_with_garbage
@@ -22,14 +23,14 @@ def main(canvas):
     rocket_symbols = get_rocket_frame()
     garbage_frames = get_garbage_frame()
 
-    coroutines.extend((blink(canvas, random.randint(1, height-2), random.randint(1, width-2), random.choice("+*.:"), random.randint(4, 10)) for _ in range(space_stars)))
-    coroutines.extend(
+    coroutines.extend(chain(
+        (blink(canvas, random.randint(1, height-2), random.randint(1, width-2), random.choice("+*.:"), random.randint(4, 10)) for _ in range(space_stars)),
         (
             animate_spaceship(canvas, height/2, width/2, rocket_symbols, coroutines, obstacles, obstacles_in_last_collisions),
             fill_orbit_with_garbage(canvas, coroutines, garbage_frames, width, obstacles, obstacles_in_last_collisions, year),
             update_year_counter(canvas, year)
         )
-    )
+    ))
 
     while coroutines:
         for coroutine in coroutines.copy():
