@@ -16,7 +16,12 @@ async def animate_spaceship(canvas, start_row, start_column, rocket_symbols, cor
     for frame in cycle(rocket_symbols):
         for _ in range(2):
             rows_direction, columns_direction, space_pressed = read_controls(canvas)
-            row_speed, column_speed = update_speed(row_speed, column_speed, rows_direction, columns_direction,)
+            row_speed, column_speed = update_speed(
+                row_speed,
+                column_speed,
+                rows_direction,
+                columns_direction,
+            )
             row += rows_direction
             column += columns_direction
 
@@ -30,8 +35,14 @@ async def animate_spaceship(canvas, start_row, start_column, rocket_symbols, cor
                     await show_gameover(canvas, row, column, frame)
 
             if space_pressed:
-                coroutines.append(fire(canvas, row, column+2, obstacles, obstacles_in_last_collisions, rows_speed=-0.99))
-
+                coroutines.append(fire(
+                    canvas,
+                    row,
+                    column+2,
+                    obstacles,
+                    obstacles_in_last_collisions,
+                    rows_speed=-0.99
+                ))
             if prev_frame is not None:
                 draw_frame(canvas, prev_row, prev_column, prev_frame, negative=True)
             draw_frame(canvas, row, column, frame)
