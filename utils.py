@@ -106,7 +106,7 @@ async def show_gameover(canvas, row, column, frame):
 async def update_year_counter(canvas, year):
     height, width = canvas.getmaxyx()
     while True:
-        view_year = canvas.derwin(0, 0, height - 2, width - 100)
+        display = canvas.derwin(0, 0, height - 2, width - 100)
         year[0] += 1
-        view_year.addstr(1, 1, f"Year: {year[0]} {PHRASES.get(year[0], '')}")
+        display.addstr(1, 1, f"Year: {year[0]} {PHRASES.get(year[0], '')}")
         await sleep(3)
