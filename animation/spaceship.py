@@ -2,7 +2,8 @@ from itertools import cycle
 
 from animation.fire import fire
 from physics import update_speed
-from utils import draw_frame, get_frame_size, read_controls, sleep
+from utils import (draw_frame, get_frame_size, read_controls, show_gameover,
+                   sleep)
 
 
 async def animate_spaceship(canvas, start_row, start_column, rocket_symbols, coroutines, obstacles, obstacles_in_last_collisions):
@@ -21,6 +22,12 @@ async def animate_spaceship(canvas, start_row, start_column, rocket_symbols, cor
 
             row = max(1, min(row + rows_direction + row_speed, max_row - frame_rows - 1))
             column = max(1, min(column + columns_direction + column_speed, max_column - frame_columns - 1))
+
+            for obstacle in obstacles:
+                if not obstacle.has_collision(row, column):
+                    continue
+                else:
+                    await show_gameover(canvas, row, column, frame)
 
             if space_pressed:
                 coroutines.append(fire(canvas, row, column+2, obstacles, obstacles_in_last_collisions, rows_speed=-0.99))

@@ -86,3 +86,16 @@ def get_garbage_frame():
 async def sleep(tics=1):
     for _ in range(tics):
         await asyncio.sleep(0)
+
+
+async def show_gameover(canvas, row, column, frame):
+    height, width = canvas.getmaxyx()
+    draw_frame(canvas, row, column, frame, negative=True)
+
+    path_file = BASE_FOLDER / "gameover_frame/gameover.txt"
+    with open(path_file, "r") as file:
+        gameover_file = file.read()
+
+    while True:
+        draw_frame(canvas, height/2, width/3, gameover_file)
+        await sleep()

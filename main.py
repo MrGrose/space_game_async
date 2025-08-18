@@ -5,7 +5,7 @@ import time
 from animation.blink import blink
 from animation.garbage import fill_orbit_with_garbage
 from animation.spaceship import animate_spaceship
-from utils import get_garbage_frame, get_rocket_frame
+from utils import get_garbage_frame, get_rocket_frame, show_gameover
 
 TIC_TIMEOUT = 0.1
 
@@ -18,7 +18,7 @@ def main(canvas):
     canvas.nodelay(True)
     canvas.border()
     height, width = canvas.getmaxyx()
-    # canvas.addstr(0, 0, f"Height: {height}, Width: {width}")
+    canvas.addstr(0, 0, f"Height: {height}, Width: {width}")
     space_stars = random.randint(30, 50)
     rocket_symbols = get_rocket_frame()
     garbage_frames = get_garbage_frame()
