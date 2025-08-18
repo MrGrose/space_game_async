@@ -9,7 +9,8 @@
 
 
 ## Пример работы
-![Space_game_2](https://github.com/user-attachments/assets/1b55a1a9-2ec8-4687-a326-9a29bb42d58a)
+![Space_game_2](https://github.com/user-attachments/assets/28307c56-d1fd-45f6-9204-0170a5e1b9cc)
+
 
 ## Настройка
 1. Клонируйте репозиторий:
