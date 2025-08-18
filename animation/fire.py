@@ -3,9 +3,8 @@ import curses
 from utils import sleep
 
 
-async def fire(canvas, start_row, start_column, rows_speed=-0.3, columns_speed=0):
+async def fire(canvas, start_row, start_column, obstacles, obstacles_in_last_collisions, rows_speed=-0.3, columns_speed=0):
     row, column = start_row, start_column
-
     canvas.addstr(round(row), round(column), "*")
     await sleep()
 
@@ -29,3 +28,10 @@ async def fire(canvas, start_row, start_column, rows_speed=-0.3, columns_speed=0
         canvas.addstr(round(row), round(column), " ")
         row += rows_speed
         column += columns_speed
+
+        for obstacle in obstacles:
+            if not obstacle.has_collision(row, column):
+                continue
+            else:
+                obstacles_in_last_collisions.append(obstacle)
+                return

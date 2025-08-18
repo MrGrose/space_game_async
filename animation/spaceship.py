@@ -5,7 +5,7 @@ from physics import update_speed
 from utils import draw_frame, get_frame_size, read_controls, sleep
 
 
-async def animate_spaceship(canvas, start_row, start_column, rocket_symbols, coroutines):
+async def animate_spaceship(canvas, start_row, start_column, rocket_symbols, coroutines, obstacles, obstacles_in_last_collisions):
     prev_frame = None
     row, column = start_row, start_column
     prev_row, prev_column = row, column
@@ -23,7 +23,7 @@ async def animate_spaceship(canvas, start_row, start_column, rocket_symbols, cor
             column = max(1, min(column + columns_direction + column_speed, max_column - frame_columns - 1))
 
             if space_pressed:
-                coroutines.append(fire(canvas, row, column+2, rows_speed=-0.99))
+                coroutines.append(fire(canvas, row, column+2, obstacles, obstacles_in_last_collisions, rows_speed=-0.99))
 
             if prev_frame is not None:
                 draw_frame(canvas, prev_row, prev_column, prev_frame, negative=True)
