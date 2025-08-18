@@ -2,7 +2,7 @@ import random
 
 from animation.explosion import explode
 from game_scenario import get_garbage_delay_tics
-from obstacles import Obstacle
+from mechanics.obstacles import Obstacle
 from utils import draw_frame, get_frame_size, sleep
 
 

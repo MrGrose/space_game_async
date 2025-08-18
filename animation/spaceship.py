@@ -1,7 +1,7 @@
 from itertools import cycle
 
 from animation.fire import fire
-from physics import update_speed
+from mechanics.physics import update_speed
 from utils import (draw_frame, get_frame_size, read_controls, show_gameover,
                    sleep)
 
