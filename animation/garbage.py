@@ -1,6 +1,7 @@
 import random
 
 from animation.explosion import explode
+from game_scenario import get_garbage_delay_tics
 from obstacles import Obstacle
 from utils import draw_frame, get_frame_size, sleep
 
@@ -12,12 +13,10 @@ async def fly_garbage(canvas, column, garbage_frame, obstacles, obstacles_in_las
 
     column = max(column, 0)
     column = min(column, columns_number - frame_columns - 1)
-    # column = max(column, min(column, columns_number - frame_columns - 1))
     row = 1
 
     obstacle = Obstacle(row, column, frame_rows, frame_columns)
     obstacles.append(obstacle)
-
     try:
         while row + frame_rows < rows_number - 1:
             if obstacle in obstacles_in_last_collisions:
@@ -35,11 +34,14 @@ async def fly_garbage(canvas, column, garbage_frame, obstacles, obstacles_in_las
         obstacles.remove(obstacle)
 
 
-async def fill_orbit_with_garbage(canvas, coroutines, garbage_frames, max_width, obstacles, obstacles_in_last_collisions):
+async def fill_orbit_with_garbage(canvas, coroutines, garbage_frames, max_width, obstacles, obstacles_in_last_collisions, year):
     while True:
-        column = random.randint(1, max_width - 2)
-        time_stick = random.randint(10, 20)
-        garbage_frame = random.choice(garbage_frames)
-        coroutines.append(fly_garbage(canvas, column=column, garbage_frame=garbage_frame, obstacles=obstacles, obstacles_in_last_collisions=obstacles_in_last_collisions))
-
-        await sleep(time_stick)
+        amount_year = get_garbage_delay_tics(year[0])
+        if amount_year:
+            for _ in range(0, amount_year):
+                time_stick = random.randint(5, 10)
+                column = random.randint(1, max_width - 2)
+                garbage_frame = random.choice(garbage_frames)
+                coroutines.append(fly_garbage(canvas, column=column, garbage_frame=garbage_frame, obstacles=obstacles, obstacles_in_last_collisions=obstacles_in_last_collisions))
+                await sleep(time_stick)
+        await sleep()
