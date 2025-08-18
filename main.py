@@ -5,15 +5,14 @@ import time
 from animation.blink import blink
 from animation.garbage import fill_orbit_with_garbage
 from animation.spaceship import animate_spaceship
-from utils import get_garbage_frame, get_rocket_frame, show_gameover
+from utils import get_garbage_frame, get_rocket_frame, update_year_counter
 
 TIC_TIMEOUT = 0.1
-
-coroutines, obstacles, obstacles_in_last_collisions = [], [], []
+coroutines, obstacles, obstacles_in_last_collisions, year = [], [], [], [1957]
 
 
 def main(canvas):
-    global coroutines, obstacles, obstacles_in_last_collisions
+    global coroutines, obstacles, obstacles_in_last_collisions, year
     curses.curs_set(False)
     canvas.nodelay(True)
     canvas.border()
@@ -25,7 +24,8 @@ def main(canvas):
 
     coroutines.extend([blink(canvas, random.randint(1, height-2), random.randint(1, width-2), random.choice("+*.:"), random.randint(4, 10)) for _ in range(space_stars)])
     coroutines.append(animate_spaceship(canvas, height/2, width/2, rocket_symbols, coroutines, obstacles, obstacles_in_last_collisions))
-    coroutines.append(fill_orbit_with_garbage(canvas, coroutines, garbage_frames, width, obstacles, obstacles_in_last_collisions))
+    coroutines.append(fill_orbit_with_garbage(canvas, coroutines, garbage_frames, width, obstacles, obstacles_in_last_collisions, year))
+    coroutines.append(update_year_counter(canvas, year))
 
     while coroutines:
         for coroutine in coroutines.copy():

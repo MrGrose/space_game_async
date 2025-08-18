@@ -1,7 +1,9 @@
 import asyncio
 from pathlib import Path
 
-BASE_FOLDER = Path(__file__).parent
+from game_scenario import PHRASES
+
+BASE_FOLDER = Path(__file__).parent / "frames"
 
 SPACE_KEY_CODE = 32
 LEFT_KEY_CODE = 260
@@ -76,7 +78,7 @@ def draw_frame(canvas, start_row, start_column, text, negative=False):
 def get_garbage_frame():
     frames = []
     path_file = BASE_FOLDER / "garbage_frame"
-    for garbage in path_file.rglob("trash_*.txt"):
+    for garbage in path_file.rglob("*.txt"):
         with open(garbage, "r") as garbage_file:
             frames.append(garbage_file.read())
 
@@ -99,3 +101,12 @@ async def show_gameover(canvas, row, column, frame):
     while True:
         draw_frame(canvas, height/2, width/3, gameover_file)
         await sleep()
+
+
+async def update_year_counter(canvas, year_container):
+    height, width = canvas.getmaxyx()
+    while True:
+        t = canvas.derwin(0, 0, height - 2, width - 100)
+        year_container[0] += 1
+        t.addstr(1, 1, f"Year: {year_container[0]} {PHRASES.get(year_container[0], '')}")
+        await sleep(3)
